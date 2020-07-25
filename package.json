@@ -1,0 +1,14 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Hrach",
+  "license": "ISC",
+  "dependencies": {
+    "shelljs": "^0.8.4"
+  }
+}
