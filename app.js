@@ -1,31 +1,44 @@
-const express = require('express');
-const app = express()
-const favicon = require('express-favicon');
-const fs = require('fs')
-const morgan = require('morgan')
+const express = require("express");
+var handlebars  = require('express-handlebars');
+const app = express();
+ 
+const hbss = handlebars.create({
+    layoutsDir: __dirname + '/views/layouts',
+    extname: 'hbs',
+    defaultLayout: 'index',
+    partialsDir: __dirname + '/views/partials/',
+  
+    
+  })
+  app.use(express.json())
+  app.use(express.urlencoded({extended:false}))
+  app.set('view engine', 'hbs');
+  app.engine('hbs',hbss.engine )
 
-const port = 3000;
-app.use(morgan('dev'))
-app.use(favicon(__dirname + '/public/favicon.png'));
-app.use(express.static(__dirname + '/public'))
-app.use(function(req,res,next){
+app.use('/register',(req,res)=>{
 
-    console.log('another midlwere')
-    next()
-})
-
-app.use('/',require('./routs/rout'))
-
-
-app.get('/test',(req,res)=>{
-
-    res.sendFile(__dirname + '/demofile1.html')
-})
-
-function data(req,res,next){
-    let data  = new Date();
-    fs.appendFile('serv.log',data + '\n',function(){} )
-    next()
-}
-
-app.listen(port,console.log(`server is runing on port ${port}`))
+    res.render('home.hbs', {
+        title: "home.hbs",
+        name: req.body.userName,
+        userAge:req.body.userAge
+    });
+    
+}) 
+app.use("/contact", function(request, response){
+     
+    response.render("index.hbs", {
+        title: "Мои контакты",
+        email: "gavgav@mycorp.com",
+        phone: "+1234567890"
+    });
+});
+app.use("/", function(request, response){
+     
+    response.render('home.hbs', {
+        title: "home.hbs",
+        name: "Hrach",
+        userAge: ""
+    });
+});
+app.listen(3030,console.log(3030)
+);
